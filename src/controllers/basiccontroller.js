@@ -7,7 +7,6 @@ const { onlyMailExist } = require('../middlewares/detailsExist')
 const adminregister = async (req, res) => {
     try{
         var details = await onlyMailExist(req.body.email);
-        
         if(details === false){             
 
             password = await passwordHash(req.body.password)

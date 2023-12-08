@@ -11,7 +11,7 @@ const editVendor = async (req, res) => {
             const action = req.body.action
 
             if(action == null || action == ''){
-                let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/data', {
+                let edit = await axios.post('https://gateway-6ew9.onrender.com/vendors/giveData/data', {
                     vendorid: vendorid
                 })
                 if(response !== null) {
@@ -23,7 +23,7 @@ const editVendor = async (req, res) => {
             }
             
             else if(action != null || action != ''){
-                let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/editdata', {
+                let edit = await axios.post('https://gateway-6ew9.onrender.com/vendors/giveData/editdata', {
                     vendorid: vendorid,
                     action: action
                 })
