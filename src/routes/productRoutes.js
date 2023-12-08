@@ -3,7 +3,7 @@ const productcontroller = require('../controllers/productcontroller')
 const upload = require("../middlewares/uploads");
 
 router.post('/create', upload.single("img"), productcontroller.createProduct)
-router.post('/addVideo', productcontroller.createVideo)
+router.post('/addvideo', productcontroller.createVideo)
 router.post('/addaffiliate', productcontroller.createAffiliate)
 router.post('/edit', upload.single("img"), productcontroller.editProduct)
 router.post('/delete', productcontroller.deleteProduct)
