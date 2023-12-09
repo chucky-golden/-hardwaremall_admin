@@ -134,9 +134,31 @@ const adminReset = async (req, res) => {
 }
 
 
+
+
+const fetchAdmin = async (req, res) => {
+    try{
+
+        let id = req.params.id
+        const admin = await Admin.findOne({ _id: id });
+
+        if(admin !== null){
+            res.json({ message: admin })
+        }else{
+            res.json({ message: 'no admin found' })
+        }
+
+    }catch(error){
+        console.log(error)
+        res.json({ message: 'error processing request' })
+    }
+}
+
+
 module.exports = {
     adminlogin,
     adminregister,
     adminForgot,
     adminReset,
+    fetchAdmin,
 }
