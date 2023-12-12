@@ -22,10 +22,7 @@ module.exports = async (app) => {
     app.use(cors())
 
     app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
-
-    const upload = multer();
-    app.use(upload.none());
+    app.use(express.urlencoded({ extended: true }))    
 
     // app.use(bodyParser.json());
     // app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,6 +33,9 @@ module.exports = async (app) => {
         resave: false,
         saveUninitialized: true
     }))
+
+    const upload = multer();
+    app.use(upload.none());
 
     // admin account routes
     app.use('/', basicRoutes)
