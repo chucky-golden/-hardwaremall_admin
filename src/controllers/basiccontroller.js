@@ -37,10 +37,12 @@ const adminregister = async (req, res) => {
 // admin login
 const adminlogin = async (req, res) => {
     try{
+        console.log('data', req.body)
+
         email = req.body.email;
+        
         password = await passwordHash(req.body.password)
 
-        console.log(req.body)
 
         const admin = await Admin.findOne({ email: req.body.email }); 
         if (admin) { 
