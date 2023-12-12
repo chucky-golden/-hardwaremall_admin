@@ -2,14 +2,8 @@ const express = require('express')
 const databaseConnection = require('./database/database')
 const { PORT, dbURI, SALT } = require('./config')
 const expressApp = require('./express-app')
-const cors = require('cors')
 
 const app = express()
-
-app.use(cors())
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
 const startServer = async () => {
     await databaseConnection(dbURI)

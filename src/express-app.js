@@ -1,5 +1,5 @@
 const express = require('express')
-// const cors = require('cors')
+const cors = require('cors')
 // const bodyParser = require('body-parser');
 const multer = require('multer');
 const basicRoutes = require('./routes/basicRoutes')
@@ -18,9 +18,14 @@ module.exports = async (app) => {
 
     // middleware for static files
     app.use(express.static('public'))
+    
+    app.use(cors())
 
-    // const upload = multer();
-    // app.use(upload.array());
+    app.use(express.json())
+    app.use(express.urlencoded({ extended: true }))
+
+    const upload = multer();
+    app.use(upload.array());
 
     // app.use(bodyParser.json());
     // app.use(bodyParser.urlencoded({ extended: true }));
