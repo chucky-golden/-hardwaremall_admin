@@ -109,20 +109,54 @@ const createAffiliate = async (req, res) => {
 // fetch affiliate
 const viewAffiliate = async (req, res) => {
     try{
-        let uid = req.body.admin_id
 
-        if(req.session.admin._id == uid){
+        let response = await Affiliate.find().sort({ createdAt: -1 })
+        if(response !== null){
+            res.json({ affiliate: response })
+        }
+        else {
+            res.json({ message: 'error handling request' })
+        } 
 
-            let response = await Affiliate.find().sort({ createdAt: -1 })
-            if(response !== null){
-                res.json({ affiliate: response })
-            }
-            else {
-                res.json({ message: 'error handling request' })
-            }
-        }else{
-            res.json({ message: 'unauthorised access' })
-        }   
+    }catch (error) {
+        console.log(error)
+        res.json({ message: 'error processing request' })
+    }
+}
+
+
+
+// fetch video
+const viewVideo = async (req, res) => {
+    try{
+
+        let response = await Video.find().sort({ createdAt: -1 })
+        if(response !== null){
+            res.json({ video: response })
+        }
+        else {
+            res.json({ message: 'error handling request' })
+        } 
+
+    }catch (error) {
+        console.log(error)
+        res.json({ message: 'error processing request' })
+    }
+}
+
+
+
+// fetch video
+const viewProduct = async (req, res) => {
+    try{
+
+        let response = await Product.find().sort({ createdAt: -1 })
+        if(response !== null){
+            res.json({ products: response })
+        }
+        else {
+            res.json({ message: 'error handling request' })
+        } 
 
     }catch (error) {
         console.log(error)
@@ -297,6 +331,8 @@ module.exports = {
     editProduct,
     createAffiliate,
     viewAffiliate,
+    viewVideo,
+    viewProduct,
     deleteAff,
     deleteVideo,
     deleteProduct,

@@ -16,6 +16,8 @@ router.post('/deletevideo', productcontroller.deleteVideo)
 
 // get routes
 router.get('/getaffiliate', productcontroller.viewAffiliate)
+router.get('/getvideo', productcontroller.viewVideo)
+router.get('/getproducts', productcontroller.viewProduct)
 
 
 
