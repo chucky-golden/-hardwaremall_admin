@@ -40,6 +40,8 @@ const adminlogin = async (req, res) => {
         email = req.body.email;
         password = await passwordHash(req.body.password)
 
+        console.log(req.body)
+
         const admin = await Admin.findOne({ email: req.body.email }); 
         if (admin) { 
             //check if password matches 
