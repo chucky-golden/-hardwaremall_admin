@@ -20,11 +20,12 @@ router.get('/getvideo', productcontroller.viewVideo)
 router.get('/getproducts', productcontroller.viewProduct)
 
 
-
-module.exports = router
-
 // Add this at the end of your productRoutes.js
 router.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Internal Server Error');
   });
+
+
+  
+module.exports = router
