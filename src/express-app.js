@@ -30,8 +30,8 @@ module.exports = async (app) => {
         saveUninitialized: true
     }))
 
-    const upload = multer();
-    app.use(upload.none());
+    const uploadDirect = multer();
+    app.use(uploadDirect.none());
 
     // admin account routes
     app.use('/', basicRoutes)
