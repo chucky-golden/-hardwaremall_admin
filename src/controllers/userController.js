@@ -42,7 +42,7 @@ const findProductWithSlug = async (req, res) => {
             }
 
             // send request to vendor app to get vendors that imported this product 
-            let response = await axios.post('https://gateway-6ew9.onrender.com/vendors/users/productsid', {
+            let response = await axios.post('https://vendors-jpnc.onrender.com/users/productsid', {
                 id: getId._id
             })
 
