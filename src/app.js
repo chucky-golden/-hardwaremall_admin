@@ -2,6 +2,7 @@ const express = require('express')
 const databaseConnection = require('./database/database')
 const { PORT, dbURI, SALT } = require('./config')
 const expressApp = require('./express-app')
+const cors = require('cors')
 
 const app = express()
 
