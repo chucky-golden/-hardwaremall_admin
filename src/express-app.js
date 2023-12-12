@@ -25,7 +25,7 @@ module.exports = async (app) => {
     app.use(express.urlencoded({ extended: true }))
 
     const upload = multer();
-    app.use(upload.array());
+    app.use(upload.none());
 
     // app.use(bodyParser.json());
     // app.use(bodyParser.urlencoded({ extended: true }));
