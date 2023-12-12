@@ -6,6 +6,10 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
+    cloudinaryid: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true

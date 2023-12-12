@@ -1,6 +1,7 @@
 const Product = require('../models/product')
 const Video = require('../models/advideo')
 const Affiliate = require('../models/affiliate')
+const cloudinary = require('../middlewares/cloudinary')
 
 
 // upload products
@@ -10,6 +11,8 @@ const createProduct = async (req, res) => {
 
         if(req.session.admin._id == uid){ 
 
+            const result = await cloudinary.uploader.upload(req.file.path)
+
             let slug = Math.floor(Math.random() * Date.now()).toString(16)
             slug = slug + '-' + req.body.name
 
@@ -18,7 +21,8 @@ const createProduct = async (req, res) => {
             }
 
             let info = {
-                img: req.file.filename,
+                img: result.secure_url,
+                cloudinaryid: result.public_id,
                 name: req.body.name,
                 description: req.body.description,
                 category: req.body.category,
