@@ -7,6 +7,8 @@ const cloudinary = require('../middlewares/cloudinary')
 // upload products
 const createProduct = async (req, res) => {
     try{
+        console.log('data',req.body)
+        
         let uid = req.body.admin_id
 
         if(req.session.admin._id == uid){ 
