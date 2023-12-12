@@ -146,7 +146,7 @@ const viewVideo = async (req, res) => {
 
 
 
-// fetch video
+// fetch product
 const viewProduct = async (req, res) => {
     try{
 
