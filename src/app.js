@@ -5,6 +5,11 @@ const expressApp = require('./express-app')
 
 const app = express()
 
+app.use(cors())
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 const startServer = async () => {
     await databaseConnection(dbURI)
 

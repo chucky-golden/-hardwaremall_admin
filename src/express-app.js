@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const basicRoutes = require('./routes/basicRoutes')
+// const basicRoutes = require('./routes/basicRoutes')
 const productRoutes = require('./routes/productRoutes')
 const vendorRoutes = require('./routes/vendorRoutes')
 const searchRoutes = require('./routes/searchRoutes')
@@ -18,17 +18,12 @@ module.exports = async (app) => {
 
     // middleware for static files
     app.use(express.static('public'))
-    
-    app.use(cors())
-
-    app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
 
     // const upload = multer();
     // app.use(upload.array());
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    // app.use(bodyParser.json());
+    // app.use(bodyParser.urlencoded({ extended: true }));
 
     // setting d express session middleware
     app.use(session({
