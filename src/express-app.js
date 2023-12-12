@@ -1,6 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-// const bodyParser = require('body-parser');
 const multer = require('multer');
 const basicRoutes = require('./routes/basicRoutes')
 const productRoutes = require('./routes/productRoutes')
@@ -24,9 +23,6 @@ module.exports = async (app) => {
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))    
 
-    // app.use(bodyParser.json());
-    // app.use(bodyParser.urlencoded({ extended: true }));
-
     // setting d express session middleware
     app.use(session({
         secret: SESSION_SECRET,
@@ -34,8 +30,8 @@ module.exports = async (app) => {
         saveUninitialized: true
     }))
 
-    const upload = multer();
-    app.use(upload.none());
+    // const upload = multer();
+    // app.use(upload.none());
 
     // admin account routes
     app.use('/', basicRoutes)
