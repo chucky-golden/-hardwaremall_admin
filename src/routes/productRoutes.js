@@ -1,6 +1,10 @@
 const router = require('express').Router()
 const productcontroller = require('../controllers/productcontroller')
-const upload = require("../middlewares/uploads");
+// const upload = require("../middlewares/uploads");
+const multer = require("multer")
+
+let storage = multer.memoryStorage()
+let upload = multer({storage: storage})
 
 router.post('/create', upload.single("img"), productcontroller.createProduct)
 router.post('/addvideo', productcontroller.createVideo)
