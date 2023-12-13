@@ -2,44 +2,57 @@ const Product = require('../models/product')
 const Video = require('../models/advideo')
 const Affiliate = require('../models/affiliate')
 const cloudinary = require('../middlewares/cloudinary')
+const streamifier = require('streamifier')
 
 
 // upload products
 const createProduct = async (req, res) => {
     try{
         console.log('data',req.body)
-        
+
         let uid = req.body.admin_id
 
         if(req.session.admin._id == uid){ 
 
-            const result = await cloudinary.uploader.upload(req.file.path)
-
-            let slug = Math.floor(Math.random() * Date.now()).toString(16)
-            slug = slug + '-' + req.body.name
-
             if (req.file == undefined) {
-                res.json({ message: 'please upload an image' })
+                return res.json({ message: 'please upload an image' })
             }
 
-            let info = {
-                img: result.secure_url,
-                cloudinaryid: result.public_id,
-                name: req.body.name,
-                description: req.body.description,
-                category: req.body.category,
-                tags: req.body.tags,
-                countperimport: '0',
-                slug: slug,
-                affiliate: req.body.affiliate,
-            }
+            
+            // Convert the buffer to a readable stream
+            const bufferStream = streamifier.createReadStream(req.file.buffer);
+            // Create a stream from the buffer
+            const stream = cloudinary.uploader.upload_stream(async (error, result) => {
+                if (error) {
+                    console.error(error);
+                    return res.json({ message: 'Error uploading product' });
+                } else {
+                    let slug = Math.floor(Math.random() * Date.now()).toString(16);
+                    slug = slug + '-' + req.body.name;
 
-            const product = await new Product(info).save()
-            if(product !== null){
-                res.json({ message: 'product uploaded' })
-            }else{
-                res.json({ message: 'error uploading product' })
-            }
+                    let info = {
+                        img: result.secure_url,
+                        cloudinaryid: result.public_id,
+                        name: req.body.name,
+                        description: req.body.description,
+                        category: req.body.category,
+                        tags: req.body.tags,
+                        countperimport: '0',
+                        slug: slug,
+                        affiliate: req.body.affiliate,
+                    };
+
+                    const product = await new Product(info).save();
+                    if (product !== null) {
+                        return res.json({ message: 'Product uploaded' });
+                    } else {
+                        return res.json({ message: 'Error uploading product' });
+                    }
+                }
+            });
+
+            // Pipe the buffer stream to the Cloudinary stream
+            bufferStream.pipe(stream);
         }else{
             res.json({ message: 'unauthorised access' })
         }

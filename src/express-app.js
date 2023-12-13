@@ -1,6 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-const multer = require('multer');
 const basicRoutes = require('./routes/basicRoutes')
 const productRoutes = require('./routes/productRoutes')
 const vendorRoutes = require('./routes/vendorRoutes')
@@ -30,8 +29,6 @@ module.exports = async (app) => {
         saveUninitialized: true
     }))
 
-    const uploadDirect = multer();
-    app.use(uploadDirect.none());
 
     // admin account routes
     app.use('/', basicRoutes)
