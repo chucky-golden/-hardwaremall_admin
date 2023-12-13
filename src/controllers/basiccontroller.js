@@ -37,7 +37,7 @@ const adminregister = async (req, res) => {
 // admin login
 const adminlogin = async (req, res) => {
     try{
-        console.log('data', req.body)
+        // console.log('data', req.body)
 
         email = req.body.email;
         

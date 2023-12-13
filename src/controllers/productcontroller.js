@@ -8,7 +8,7 @@ const streamifier = require('streamifier')
 // upload products
 const createProduct = async (req, res) => {
     try{
-        console.log('data',req.body)
+        // console.log('data',req.body)
 
         let uid = req.body.admin_id
 
@@ -277,25 +277,42 @@ const editProduct = async (req, res) => {
                     res.json({ message: 'error updating product' })
                 }
             }else{
-                const product = await Product.updateOne({ _id: productid }, 
-                    {
-                        $set:{
 
-                            img: req.file.filename,
-                            name: req.body.name,
-                            description: req.body.description,
-                            category: req.body.category,
-                            tags: req.body.tags,
-                            slug: slug,
-                            affiliate: req.body.affiliate,
+                // Convert the buffer to a readable stream
+                const bufferStream = streamifier.createReadStream(req.file.buffer);
+                // Create a stream from the buffer
+                const stream = cloudinary.uploader.upload_stream(async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return res.json({ message: 'Error uploading product' });
+                    } else {
+
+                        const product = await Product.updateOne({ _id: productid }, 
+                            {
+                                $set:{
+
+                                    img: result.secure_url,
+                                    cloudinaryid: result.public_id,
+                                    name: req.body.name,
+                                    description: req.body.description,
+                                    category: req.body.category,
+                                    tags: req.body.tags,
+                                    slug: slug,
+                                    affiliate: req.body.affiliate,
+                                }
+                            }
+                        )
+                        if(product !== null){
+                            res.json({ message: 'product updated' })
+                        }else{
+                            res.json({ message: 'error updating product' })
                         }
                     }
-                )
-                if(product !== null){
-                    res.json({ message: 'product updated' })
-                }else{
-                    res.json({ message: 'error updating product' })
-                }
+                });
+    
+                // Pipe the buffer stream to the Cloudinary stream
+                bufferStream.pipe(stream);
+
             }
 
             
