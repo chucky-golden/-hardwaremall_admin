@@ -8,54 +8,46 @@ const streamifier = require('streamifier')
 // upload products
 const createProduct = async (req, res) => {
     try{
-        // console.log('data',req.body)
 
-        let uid = req.body.admin_id
-
-        if(req.session.admin._id == uid){ 
-
-            if (req.file == undefined) {
-                return res.json({ message: 'please upload an image' })
-            }
-
-            
-            // Convert the buffer to a readable stream
-            const bufferStream = streamifier.createReadStream(req.file.buffer);
-            // Create a stream from the buffer
-            const stream = cloudinary.uploader.upload_stream(async (error, result) => {
-                if (error) {
-                    console.error(error);
-                    return res.json({ message: 'Error uploading product' });
-                } else {
-                    let slug = Math.floor(Math.random() * Date.now()).toString(16);
-                    slug = slug + '-' + req.body.name;
-
-                    let info = {
-                        img: result.secure_url,
-                        cloudinaryid: result.public_id,
-                        name: req.body.name,
-                        description: req.body.description,
-                        category: req.body.category,
-                        tags: req.body.tags,
-                        countperimport: '0',
-                        slug: slug,
-                        affiliate: req.body.affiliate,
-                    };
-
-                    const product = await new Product(info).save();
-                    if (product !== null) {
-                        return res.json({ message: 'Product uploaded' });
-                    } else {
-                        return res.json({ message: 'Error uploading product' });
-                    }
-                }
-            });
-
-            // Pipe the buffer stream to the Cloudinary stream
-            bufferStream.pipe(stream);
-        }else{
-            res.json({ message: 'unauthorised access' })
+        if (req.file == undefined) {
+            return res.json({ message: 'please upload an image' })
         }
+
+        
+        // Convert the buffer to a readable stream
+        const bufferStream = streamifier.createReadStream(req.file.buffer);
+        // Create a stream from the buffer
+        const stream = cloudinary.uploader.upload_stream(async (error, result) => {
+            if (error) {
+                console.error(error);
+                return res.json({ message: 'Error uploading product' });
+            } else {
+                let slug = Math.floor(Math.random() * Date.now()).toString(16);
+                slug = slug + '-' + req.body.name;
+
+                let info = {
+                    img: result.secure_url,
+                    cloudinaryid: result.public_id,
+                    name: req.body.name,
+                    description: req.body.description,
+                    category: req.body.category,
+                    tags: req.body.tags,
+                    countperimport: '0',
+                    slug: slug,
+                    affiliate: req.body.affiliate,
+                };
+
+                const product = await new Product(info).save();
+                if (product !== null) {
+                    return res.json({ message: 'Product uploaded' });
+                } else {
+                    return res.json({ message: 'Error uploading product' });
+                }
+            }
+        });
+
+        // Pipe the buffer stream to the Cloudinary stream
+        bufferStream.pipe(stream);
         
     }catch (error) {
         console.log(error)
@@ -68,24 +60,20 @@ const createProduct = async (req, res) => {
 // add video links
 const createVideo = async (req, res) => {
     try{
-        let uid = req.body.admin_id
-
-        if(req.session.admin._id == uid){ 
+         
         
-            let info = {
-                title: req.body.title,
-                url: req.body.url,
-            }
-
-            const video = await new Video(info).save()
-            if(video !== null){
-                res.json({ message: 'video link uploaded' })
-            }else{
-                res.json({ message: 'error uploading video link' })
-            }
-        }else{
-            res.json({ message: 'unauthorised access' })
+        let info = {
+            title: req.body.title,
+            url: req.body.url,
         }
+
+        const video = await new Video(info).save()
+        if(video !== null){
+            res.json({ message: 'video link uploaded' })
+        }else{
+            res.json({ message: 'error uploading video link' })
+        }
+       
         
     }catch (error) {
         console.log(error)
@@ -98,23 +86,18 @@ const createVideo = async (req, res) => {
 // add affiliate link
 const createAffiliate = async (req, res) => {
     try{
-        let uid = req.body.admin_id
-
-        if(req.session.admin._id == uid){ 
         
-            let info = {
-                title: req.body.title,
-                url: req.body.url,
-            }
+        
+        let info = {
+            title: req.body.title,
+            url: req.body.url,
+        }
 
-            const video = await new Affiliate(info).save()
-            if(video !== null){
-                res.json({ message: 'affiliate link uploaded' })
-            }else{
-                res.json({ message: 'error uploading affiliate link' })
-            }
+        const video = await new Affiliate(info).save()
+        if(video !== null){
+            res.json({ message: 'affiliate link uploaded' })
         }else{
-            res.json({ message: 'unauthorised access' })
+            res.json({ message: 'error uploading affiliate link' })
         }
         
     }catch (error) {
@@ -188,23 +171,18 @@ const viewProduct = async (req, res) => {
 // delete affiliate
 const deleteAff = async (req, res) => {
     try{
-        let uid = req.body.admin_id
+        
 
-        if(req.session.admin._id == uid){
+        const affiliateid = req.body.affiliate_id
 
-            const affiliateid = req.body.affiliate-id
+        const result = await Affiliate.findByIdAndDelete(affiliateid)
 
-            const result = await Affiliate.findByIdAndDelete(affiliateid)
-
-            if(result !== null){
-                res.json({ message: 'affiliate link deleted' })
-            }else{
-                res.json({ message: 'error deleting link' })
-            }
-
+        if(result !== null){
+            res.json({ message: 'affiliate link deleted' })
         }else{
-            res.json({ message: 'unauthorised access' })
-        }   
+            res.json({ message: 'error deleting link' })
+        }
+  
 
     }catch (error) {
         console.log(error)
@@ -218,23 +196,18 @@ const deleteAff = async (req, res) => {
 // delete video
 const deleteVideo = async (req, res) => {
     try{
-        let uid = req.body.admin_id
+        
 
-        if(req.session.admin._id == uid){
+        const videoid = req.body.video_id
 
-            const videoid = req.body.video-id
+        const result = await Video.findByIdAndDelete(videoid)
 
-            const result = await Video.findByIdAndDelete(videoid)
-
-            if(result !== null){
-                res.json({ message: 'video link deleted' })
-            }else{
-                res.json({ message: 'error deleting video link' })
-            }
-
+        if(result !== null){
+            res.json({ message: 'video link deleted' })
         }else{
-            res.json({ message: 'unauthorised access' })
-        }   
+            res.json({ message: 'error deleting video link' })
+        }
+  
 
     }catch (error) {
         console.log(error)
@@ -248,78 +221,70 @@ const deleteVideo = async (req, res) => {
 // editing products
 const editProduct = async (req, res) => {
     try{
-        let uid = req.body.admin_id
 
-        if(req.session.admin._id == uid){
+        const productid = req.body.product_id
 
-            const productid = req.body.product_id
-
-            let slug = Math.floor(Math.random() * Date.now()).toString(16)
-            slug = slug + '-' + req.body.name
-
-                
-            if (req.file == undefined) {
-                const product = await Product.updateOne({ _id: productid }, 
-                    {
-                        $set:{
-                            name: req.body.name,
-                            description: req.body.description,
-                            category: req.body.category,
-                            tags: req.body.tags,
-                            slug: slug,
-                            affiliate: req.body.affiliate,
-                        }
-                    }
-                )
-                if(product !== null){
-                    res.json({ message: 'product updated' })
-                }else{
-                    res.json({ message: 'error updating product' })
-                }
-            }else{
-
-                // Convert the buffer to a readable stream
-                const bufferStream = streamifier.createReadStream(req.file.buffer);
-                // Create a stream from the buffer
-                const stream = cloudinary.uploader.upload_stream(async (error, result) => {
-                    if (error) {
-                        console.error(error);
-                        return res.json({ message: 'Error uploading product' });
-                    } else {
-
-                        const product = await Product.updateOne({ _id: productid }, 
-                            {
-                                $set:{
-
-                                    img: result.secure_url,
-                                    cloudinaryid: result.public_id,
-                                    name: req.body.name,
-                                    description: req.body.description,
-                                    category: req.body.category,
-                                    tags: req.body.tags,
-                                    slug: slug,
-                                    affiliate: req.body.affiliate,
-                                }
-                            }
-                        )
-                        if(product !== null){
-                            res.json({ message: 'product updated' })
-                        }else{
-                            res.json({ message: 'error updating product' })
-                        }
-                    }
-                });
-    
-                // Pipe the buffer stream to the Cloudinary stream
-                bufferStream.pipe(stream);
-
-            }
+        let slug = Math.floor(Math.random() * Date.now()).toString(16)
+        slug = slug + '-' + req.body.name
 
             
+        if (req.file == undefined) {
+            const product = await Product.updateOne({ _id: productid }, 
+                {
+                    $set:{
+                        name: req.body.name,
+                        description: req.body.description,
+                        category: req.body.category,
+                        tags: req.body.tags,
+                        slug: slug,
+                        affiliate: req.body.affiliate,
+                    }
+                }
+            )
+            if(product !== null){
+                res.json({ message: 'product updated' })
+            }else{
+                res.json({ message: 'error updating product' })
+            }
         }else{
-            res.json({ message: 'unauthorised access' }) 
-        }  
-       
+
+            // Convert the buffer to a readable stream
+            const bufferStream = streamifier.createReadStream(req.file.buffer);
+            // Create a stream from the buffer
+            const stream = cloudinary.uploader.upload_stream(async (error, result) => {
+                if (error) {
+                    console.error(error);
+                    return res.json({ message: 'Error uploading product' });
+                } else {
+
+                    const product = await Product.updateOne({ _id: productid }, 
+                        {
+                            $set:{
+
+                                img: result.secure_url,
+                                cloudinaryid: result.public_id,
+                                name: req.body.name,
+                                description: req.body.description,
+                                category: req.body.category,
+                                tags: req.body.tags,
+                                slug: slug,
+                                affiliate: req.body.affiliate,
+                            }
+                        }
+                    )
+                    if(product !== null){
+                        res.json({ message: 'product updated' })
+                    }else{
+                        res.json({ message: 'error updating product' })
+                    }
+                }
+            });
+
+            // Pipe the buffer stream to the Cloudinary stream
+            bufferStream.pipe(stream);
+
+        }
+
 
     }catch (error) {
         console.log(error)
@@ -334,24 +299,17 @@ const editProduct = async (req, res) => {
 // deleting products
 const deleteProduct = async (req, res) => {
     try{
-        let uid = req.body.admin_id
+        
 
-        if(req.session.admin._id == uid){
+        const productid = req.body.product_id
 
-            const productid = req.body.product_id
+        const product = await Product.findByIdAndDelete(productid)
 
-            const product = await Product.findByIdAndDelete(productid)
-
-            if(product !== null){
-                res.json({ message: 'product deleted' })
-            }else{
-                res.json({ message: 'error deleting product' })
-            }
-
-            
+        if(product !== null){
+            res.json({ message: 'product deleted' })
         }else{
-            res.json({ message: 'unauthorised access' }) 
-        }  
+            res.json({ message: 'error deleting product' })
+        } 
        
 
     }catch (error) {

@@ -1,20 +1,20 @@
 const router = require('express').Router()
 const productcontroller = require('../controllers/productcontroller')
-// const upload = require("../middlewares/uploads");
+const auth = require("../middlewares/auth");
 const multer = require("multer")
 
 let storage = multer.memoryStorage()
 let upload = multer({storage: storage})
 
-router.post('/create', upload.single("img"), productcontroller.createProduct)
-router.post('/addvideo', productcontroller.createVideo)
-router.post('/addaffiliate', productcontroller.createAffiliate)
-router.post('/edit', upload.single("img"), productcontroller.editProduct)
-router.post('/delete', productcontroller.deleteProduct)
+router.post('/create', auth, upload.single("img"), productcontroller.createProduct)
+router.post('/addvideo', auth, productcontroller.createVideo)
+router.post('/addaffiliate', auth, productcontroller.createAffiliate)
+router.post('/edit', auth, upload.single("img"), productcontroller.editProduct)
+router.post('/delete', auth, productcontroller.deleteProduct)
 
 
-router.post('/deleteaff', productcontroller.deleteAff)
-router.post('/deletevideo', productcontroller.deleteVideo)
+router.post('/deleteaff', auth, productcontroller.deleteAff)
+router.post('/deletevideo', auth, productcontroller.deleteVideo)
 
 
 

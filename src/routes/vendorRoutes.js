@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const vendorController = require('../controllers/vendorController')
+const auth = require("../middlewares/auth");
 
 
-router.post('/edit', vendorController.editVendor)
+router.post('/edit', auth, vendorController.editVendor)
 
 // request coming from the vendors service to get vendors products
 router.get('/getvendorproducts', vendorController.getProducts)

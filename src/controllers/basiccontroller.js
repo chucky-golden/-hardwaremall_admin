@@ -1,6 +1,8 @@
 const Admin = require('../models/admin')
 const passwordHash = require('../middlewares/passwordencrypt')
 const { onlyMailExist } = require('../middlewares/detailsExist')
+const jwt = require('jsonwebtoken')
+const { SESSION_SECRET } = require('../config')
 
 
 // admin register
@@ -49,8 +51,19 @@ const adminlogin = async (req, res) => {
             //check if password matches 
             const result = password === admin.password; 
           if (result) {
-                req.session.admin = admin
-                res.json({ message: 'login successful', data: admin }) 
+
+            const token = jwt.sign(
+                { admin_id: admin._id, email },
+                process.env.SESSION_SECRET,
+                {
+                  expiresIn: "2h",
+                }
+            );
+            // save user token
+            admin.token = token;
+
+            res.json({ message: 'login successful', data: admin }) 
+
           } else { 
                 res.status(400).json({ error: "password doesn't match" }); 
           } 
