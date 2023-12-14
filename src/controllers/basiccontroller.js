@@ -59,10 +59,8 @@ const adminlogin = async (req, res) => {
                   expiresIn: "2h",
                 }
             );
-            // save user token
-            admin.token = token;
 
-            res.json({ message: 'login successful', data: admin }) 
+            res.json({ message: 'login successful', data: admin, token: token }) 
 
           } else { 
                 res.status(400).json({ error: "password doesn't match" }); 
