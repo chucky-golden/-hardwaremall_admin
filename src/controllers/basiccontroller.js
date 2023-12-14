@@ -52,7 +52,7 @@ const adminlogin = async (req, res) => {
             const result = password === admin.password; 
           if (result) {
 
-            const token = jwt.sign(
+            const token = await jwt.sign(
                 { admin_id: admin._id, email },
                 process.env.SESSION_SECRET,
                 {
