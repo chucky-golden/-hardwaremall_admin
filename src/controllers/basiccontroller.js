@@ -62,6 +62,8 @@ const adminlogin = async (req, res) => {
             // save user token
             admin.token = token;
 
+            console.log('my data',admin)
+
             res.json({ message: 'login successful', data: admin }) 
 
           } else { 
