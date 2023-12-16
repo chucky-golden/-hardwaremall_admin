@@ -28,12 +28,11 @@ const findProductWithSlug = async (req, res) => {
 
         let getId = await Product.findOne({ slug: req.body.slug })
 
-        console.log('data found', getId)
         if(getId !== null){
 
             // using slug without number attached to get 10 similar product
             slug = slug.split('-')
-            slug.pop()
+            slig = slug.pop()
             newSlug = ''
             for(let i = 0; i < slug.length; i++){
                 newSlug += slug[i]
