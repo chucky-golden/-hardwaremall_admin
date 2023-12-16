@@ -171,17 +171,19 @@ const viewProduct = async (req, res) => {
 // delete affiliate
 const deleteAff = async (req, res) => {
     try{
-        
+        console.log('data1', req.body);
 
-        const affiliateid = req.body.affiliate_id
+        // const affiliateid = req.body.affiliate_id
 
-        const result = await Affiliate.findByIdAndDelete(affiliateid)
+        // const result = await Affiliate.findByIdAndDelete(affiliateid)
 
-        if(result !== null){
-            res.json({ message: 'affiliate link deleted' })
-        }else{
-            res.json({ message: 'error deleting link' })
-        }
+        // if(result !== null){
+        //     res.json({ message: 'affiliate link deleted' })
+        // }else{
+        //     res.json({ message: 'error deleting link' })
+        // }
+
+        res.json({ message: "testing" })
   
 
     }catch (error) {
@@ -197,16 +199,19 @@ const deleteAff = async (req, res) => {
 const deleteVideo = async (req, res) => {
     try{
         
+        console.log('data', req.body);
 
-        const videoid = req.body.video_id
+        // const videoid = req.body.video_id
 
-        const result = await Video.findByIdAndDelete(videoid)
+        // const result = await Video.findByIdAndDelete(videoid)
 
-        if(result !== null){
-            res.json({ message: 'video link deleted' })
-        }else{
-            res.json({ message: 'error deleting video link' })
-        }
+        // if(result !== null){
+        //     res.json({ message: 'video link deleted' })
+        // }else{
+        //     res.json({ message: 'error deleting video link' })
+        // }
+
+        res.json({ message: "testing" })
   
 
     }catch (error) {
