@@ -25,8 +25,11 @@ const findProductWithSlug = async (req, res) => {
 
         // using slug to get id of the product
         let slug = req.body.slug
+        console.log('sent data', slug)
+
         let getId = await Product.findOne({ slug: req.body.slug })
 
+        console.log('data found', getid)
         if(getId !== null){
 
             // using slug without number attached to get 10 similar product
