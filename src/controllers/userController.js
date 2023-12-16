@@ -36,15 +36,6 @@ const findProductWithSlug = async (req, res) => {
             slug = slug.pop()
             slug = escapeRegexp(slug);
 
-            // slug = ''
-            // for(let i = 0; i < slug.length; i++){
-            //     newSlug += slug[i]
-
-            //     if(i != slug.length -1 ){ 
-            //         newSlug += '-'
-            //     }
-            // }
-
             console.log('new slug', slug)
 
             // send request to vendor app to get vendors that imported this product 

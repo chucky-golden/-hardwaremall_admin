@@ -11,7 +11,7 @@ router.post('/vendorproducts', userController.vendorProducts)
 
 
 router.get('/topproducts', userController.topproducts)
-router.post('/findvideo', userController.findVideo)
+router.get('/findvideo', userController.findVideo)
 
 
 module.exports = router
