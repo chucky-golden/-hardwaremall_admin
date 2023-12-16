@@ -1,6 +1,7 @@
 const Product = require('../models/product')
 const Video = require('../models/advideo')
 const axios = require('axios')
+const escapeStringRegexp = require('escape-string-regexp')
 
 // send all uploaded product
 const findProducts = async (req, res) => {
@@ -33,15 +34,18 @@ const findProductWithSlug = async (req, res) => {
             // using slug without number attached to get 10 similar product
             slug = slug.split('-')
             slug = slug.pop()
-            newSlug = ''
-            for(let i = 0; i < slug.length; i++){
-                newSlug += slug[i]
+            slug = escapeStringRegexp(slug);
+            
+            // slug = ''
+            // for(let i = 0; i < slug.length; i++){
+            //     newSlug += slug[i]
 
-                if(i != slug.length -1 ){ 
-                    newSlug += '-'
-                }
-            }
-            console.log('new slug', newSlug)
+            //     if(i != slug.length -1 ){ 
+            //         newSlug += '-'
+            //     }
+            // }
+
+            console.log('new slug', slug)
 
             // send request to vendor app to get vendors that imported this product 
             let response = await axios.post('https://vendors-jpnc.onrender.com/users/productsid', {
@@ -53,12 +57,12 @@ const findProductWithSlug = async (req, res) => {
 
             // get top 10 similar product
             const similarProducts = await Product.find({
-                name: { $regex: new RegExp(newSlug, 'i') },
+                name: { $regex: new RegExp(slug, 'i') },
               }).limit(10);
 
             // get 3 similar video
             const similarVideos = await Video.find({
-                title: { $regex: new RegExp(newSlug, 'i') },
+                title: { $regex: new RegExp(slug, 'i') },
               }).limit(3);
 
             let sendData = {
