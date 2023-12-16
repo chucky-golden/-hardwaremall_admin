@@ -65,7 +65,7 @@ const findProductWithSlug = async (req, res) => {
                 vendors: response.data.vendors,
                 affiliate: affiliate,
                 similarProducts: similarProducts,
-                similarVideos, similarVideos
+                similarVideos: similarVideos
             }
 
             res.json({ data: sendData })
