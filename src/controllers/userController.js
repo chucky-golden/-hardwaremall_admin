@@ -37,8 +37,6 @@ const findProductWithSlug = async (req, res) => {
             slug = slug.pop()
             slug = escapeRegexp(slug);
 
-            console.log('new slug', slug)
-
             // send request to vendor app to get vendors that imported this product 
             let response = await axios.post('https://vendors-jpnc.onrender.com/users/productsid', {
                 id: getId._id
