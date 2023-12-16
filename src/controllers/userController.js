@@ -1,7 +1,7 @@
 const Product = require('../models/product')
 const Video = require('../models/advideo')
 const axios = require('axios')
-const escapeStringRegexp = require('escape-string-regexp')
+const escapeStringRegexp = (await import('escape-string-regexp')).default;
 
 // send all uploaded product
 const findProducts = async (req, res) => {
@@ -35,7 +35,7 @@ const findProductWithSlug = async (req, res) => {
             slug = slug.split('-')
             slug = slug.pop()
             slug = escapeStringRegexp(slug);
-            
+
             // slug = ''
             // for(let i = 0; i < slug.length; i++){
             //     newSlug += slug[i]
