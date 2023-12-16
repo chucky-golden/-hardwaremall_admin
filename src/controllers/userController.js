@@ -1,5 +1,6 @@
 const Product = require('../models/product')
 const Video = require('../models/advideo')
+const Affiliate = require('../models/affiliate')
 const axios = require('axios')
 const escapeRegexp = require("escape-string-regexp-node");
 
@@ -44,7 +45,19 @@ const findProductWithSlug = async (req, res) => {
             })
 
             // get affiliate links
-            // const affiliate = getId.affiliate
+            let getAff = []
+            let affiliate = getId.affiliate
+            affiliate = affiliate.split(',')
+
+            const seen =  Affiliate.find()
+
+            seen.forEach(data => {
+                for(let x = 0; x < affiliate.length; x++){
+                    if(data._id === affiliate[x]){
+                        getAff.push(affiliate[x])
+                    }
+                }
+            });
 
             // get top 10 similar product
             const similarProducts = await Product.find({
@@ -59,7 +72,7 @@ const findProductWithSlug = async (req, res) => {
             let sendData = {
                 product: getId,
                 vendors: response.data.vendors,
-                // affiliate: affiliate,
+                affiliate: getAff,
                 similarProducts: similarProducts,
                 similarVideos: similarVideos
             }
