@@ -48,7 +48,7 @@ const adminlogin = async (req, res) => {
 
         const admin = await Admin.findOne({ email: req.body.email }); 
         if (admin) { 
-            //check if password matches 
+            //check if password matches and create token
             const result = password === admin.password; 
           if (result) {
 
