@@ -44,20 +44,23 @@ const findProductWithSlug = async (req, res) => {
 
             // get affiliate links
             let getAff = []
+            let getAffLink = []
             let affiliate = getId.affiliate
             affiliate = affiliate.split(',')
-
-            console.log('affiliates', affiliate)
 
             const seen = await Affiliate.find()
 
             seen.forEach(data => {
                 for(let x = 0; x < affiliate.length; x++){
                     if(data._id == affiliate[x]){
-                        getAff.push(affiliate[x])
+                        getAff.push(data.title)
+                        getAffLink.push(data.url)
                     }
                 }
             });
+
+            console.log('affiliates', getAff)
+            console.log('affiliates links', getAffLink)
 
             // get top 10 similar product
             const similarProducts = await Product.find({
@@ -72,7 +75,8 @@ const findProductWithSlug = async (req, res) => {
             let sendData = {
                 product: getId,
                 vendors: response.data.vendors,
-                affiliate: getAff,
+                affiliateNames: getAff,
+                affiliateLinks: getAffLink,
                 similarProducts: similarProducts,
                 similarVideos: similarVideos
             }
