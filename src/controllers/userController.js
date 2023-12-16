@@ -72,7 +72,7 @@ const findProductWithSlug = async (req, res) => {
             let sendData = {
                 product: getId,
                 vendors: response.data.vendors,
-                affiliateNames: getAff,
+                affiliates: getAff,
                 similarProducts: similarProducts,
                 similarVideos: similarVideos
             }
