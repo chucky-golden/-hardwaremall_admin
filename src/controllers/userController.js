@@ -34,7 +34,7 @@ const findProductWithSlug = async (req, res) => {
             // using slug without number attached to get 10 similar product
             slug = slug.split('-')
             slug = slug.pop()
-            slug = escapeStringRegexp(slug);
+            slug = escapeRegexp(slug);
 
             // slug = ''
             // for(let i = 0; i < slug.length; i++){
