@@ -10,7 +10,7 @@ router.post('/vendorproducts', userController.vendorProducts)
 
 
 
-router.post('/topproducts', userController.topproducts)
+router.get('/topproducts', userController.topproducts)
 router.post('/findvideo', userController.findVideo)
 
 
