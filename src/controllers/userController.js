@@ -49,7 +49,7 @@ const findProductWithSlug = async (req, res) => {
             let affiliate = getId.affiliate
             affiliate = affiliate.split(',')
 
-            const seen =  Affiliate.find()
+            const seen = await Affiliate.find()
 
             seen.forEach(data => {
                 for(let x = 0; x < affiliate.length; x++){
@@ -135,7 +135,7 @@ const vendorProducts = async (req, res) => {
         let productData = req.body.data
         let productDetails = []
         
-        const products =  Product.findOne()
+        const products = await Product.findOne()
 
         productData.forEach(data => {
             for(let x = 0; x < products.length; x++){
