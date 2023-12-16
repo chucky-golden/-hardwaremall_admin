@@ -49,11 +49,13 @@ const findProductWithSlug = async (req, res) => {
             let affiliate = getId.affiliate
             affiliate = affiliate.split(',')
 
+            console.log('affiliates', affiliate)
+
             const seen = await Affiliate.find()
 
             seen.forEach(data => {
                 for(let x = 0; x < affiliate.length; x++){
-                    if(data._id === affiliate[x]){
+                    if(data._id == affiliate[x]){
                         getAff.push(affiliate[x])
                     }
                 }
