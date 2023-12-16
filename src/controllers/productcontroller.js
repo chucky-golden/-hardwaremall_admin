@@ -180,10 +180,7 @@ const deleteAff = async (req, res) => {
             res.json({ message: 'affiliate link deleted' })
         }else{
             res.json({ message: 'error deleting link' })
-        }
-
-        res.json({ message: "testing" })
-  
+        }  
 
     }catch (error) {
         console.log(error)
@@ -206,10 +203,7 @@ const deleteVideo = async (req, res) => {
             res.json({ message: 'video link deleted' })
         }else{
             res.json({ message: 'error deleting video link' })
-        }
-
-        res.json({ message: "testing" })
-  
+        }  
 
     }catch (error) {
         console.log(error)
