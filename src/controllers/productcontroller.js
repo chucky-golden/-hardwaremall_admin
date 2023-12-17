@@ -60,7 +60,7 @@ const createProduct = async (req, res) => {
 // add video links
 const createVideo = async (req, res) => {
     try{
-         
+         console.log('signed', req.admin)
         
         let info = {
             title: req.body.title,
