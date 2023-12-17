@@ -8,6 +8,9 @@ const streamifier = require('streamifier')
 // upload products
 const createProduct = async (req, res) => {
     try{
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
 
         if (req.file == undefined) {
             return res.json({ message: 'please upload an image' })
@@ -60,7 +63,9 @@ const createProduct = async (req, res) => {
 // add video links
 const createVideo = async (req, res) => {
     try{
-         console.log('signed', req.admin)
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
         
         let info = {
             title: req.body.title,
@@ -86,7 +91,9 @@ const createVideo = async (req, res) => {
 // add affiliate link
 const createAffiliate = async (req, res) => {
     try{
-        
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
         
         let info = {
             title: req.body.title,
@@ -171,6 +178,9 @@ const viewProduct = async (req, res) => {
 // delete affiliate
 const deleteAff = async (req, res) => {
     try{
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
 
         const affiliateid = req.body.affiliate_id
 
@@ -194,6 +204,9 @@ const deleteAff = async (req, res) => {
 // delete video
 const deleteVideo = async (req, res) => {
     try{
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
 
         const videoid = req.body.video_id
 
@@ -217,6 +230,9 @@ const deleteVideo = async (req, res) => {
 // editing products
 const editProduct = async (req, res) => {
     try{
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
 
         const productid = req.body.product_id
 
@@ -295,7 +311,9 @@ const editProduct = async (req, res) => {
 // deleting products
 const deleteProduct = async (req, res) => {
     try{
-        
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
 
         const productid = req.body.product_id
 
