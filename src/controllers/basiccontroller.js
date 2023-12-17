@@ -20,8 +20,16 @@ const adminregister = async (req, res) => {
 
             const admin = await new Admin(info).save()
             if(admin !== null){
-                req.session.admin = admin
-                res.json({ message: 'account created', data: admin })
+                
+                const token = await jwt.sign(
+                    { id: admin._id },
+                    process.env.SESSION_SECRET,
+                    {
+                      expiresIn: "2h",
+                    }
+                );
+
+                res.json({ message: 'account created', data: admin, token: token })
             }else{
                 res.json({ message: 'error creating account' })
             }

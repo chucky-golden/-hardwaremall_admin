@@ -236,65 +236,74 @@ const editProduct = async (req, res) => {
 
         const productid = req.body.product_id
 
-        let slug = Math.floor(Math.random() * Date.now()).toString(16)
-        slug = slug + '-' + req.body.name
+        const check = await Product.findOne({ _id: productid }) 
+        if (check !== null) {
 
-            
-        if (req.file == undefined) {
-            const product = await Product.updateOne({ _id: productid }, 
-                {
-                    $set:{
-                        name: req.body.name,
-                        description: req.body.description,
-                        category: req.body.category,
-                        tags: req.body.tags,
-                        slug: slug,
-                        affiliate: req.body.affiliate,
-                    }
-                }
-            )
-            if(product !== null){
-                res.json({ message: 'product updated' })
-            }else{
-                res.json({ message: 'error updating product' })
-            }
-        }else{
+            let slug = Math.floor(Math.random() * Date.now()).toString(16)
+            slug = slug + '-' + req.body.name
 
-            // Convert the buffer to a readable stream
-            const bufferStream = streamifier.createReadStream(req.file.buffer);
-            // Create a stream from the buffer
-            const stream = cloudinary.uploader.upload_stream(async (error, result) => {
-                if (error) {
-                    console.error(error);
-                    return res.json({ message: 'Error uploading product' });
-                } else {
-
-                    const product = await Product.updateOne({ _id: productid }, 
-                        {
-                            $set:{
-
-                                img: result.secure_url,
-                                cloudinaryid: result.public_id,
-                                name: req.body.name,
-                                description: req.body.description,
-                                category: req.body.category,
-                                tags: req.body.tags,
-                                slug: slug,
-                                affiliate: req.body.affiliate,
-                            }
+                
+            if (req.file == undefined) {
+                
+                const product = await Product.updateOne({ _id: productid }, 
+                    {
+                        $set:{
+                            name: req.body.name,
+                            description: req.body.description,
+                            category: req.body.category,
+                            tags: req.body.tags,
+                            slug: slug,
+                            affiliate: req.body.affiliate,
                         }
-                    )
-                    if(product !== null){
-                        res.json({ message: 'product updated' })
-                    }else{
-                        res.json({ message: 'error updating product' })
                     }
+                )
+                if(product !== null){
+                    res.json({ message: 'product updated' })
+                }else{
+                    res.json({ message: 'error updating product' })
                 }
-            });
+                    
+            }else{
 
-            // Pipe the buffer stream to the Cloudinary stream
-            bufferStream.pipe(stream);
+                // Convert the buffer to a readable stream
+                const bufferStream = streamifier.createReadStream(req.file.buffer);
+                // Create a stream from the buffer
+                const stream = cloudinary.uploader.upload_stream(async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return res.json({ message: 'Error uploading product' });
+                    } else {
 
+                        const product = await Product.updateOne({ _id: productid }, 
+                            {
+                                $set:{
+
+                                    img: result.secure_url,
+                                    cloudinaryid: result.public_id,
+                                    name: req.body.name,
+                                    description: req.body.description,
+                                    category: req.body.category,
+                                    tags: req.body.tags,
+                                    slug: slug,
+                                    affiliate: req.body.affiliate,
+                                }
+                            }
+                        )
+                        if(product !== null){
+                            res.json({ message: 'product updated' })
+                        }else{
+                            res.json({ message: 'error updating product' })
+                        }
+                    }
+                });
+
+                // Pipe the buffer stream to the Cloudinary stream
+                bufferStream.pipe(stream);
+
+            }
+            
+        }else{
+            res.json({ message: 'invalid id' })
         }
 
 
