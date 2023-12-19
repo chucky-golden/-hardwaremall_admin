@@ -4,34 +4,20 @@ const Product = require('../models/product')
 // block vendor account
 const editVendor = async (req, res) => {
     try{
+
+        if(req.body.admin_email != req.admin.email){
+            return res.json({ message: 'invalid or expired token' })
+        }
         
         const vendorid = req.body.vendor_id
         const action = req.body.action
 
-        if(action == null || action == ''){
-            let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/data', {
-                vendorid: vendorid
-            })
-            if(response !== null) {
-                res.json({ message: response.data.message })
-            }
-            else {
-                res.json({ message: 'error processing request' })
-            }
-        }
+        let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/editdata', {
+            vendorid: vendorid,
+            action: action
+        })
         
-        else if(action != null || action != ''){
-            let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/editdata', {
-                vendorid: vendorid,
-                action: action
-            })
-            if(response !== null) {
-                res.json({ message: response.data.message })
-            }
-            else {
-                res.json({ message: 'error processing request' })
-            }
-        }  
+        res.json({ message: response.data.message })
        
 
     }catch (error) {
