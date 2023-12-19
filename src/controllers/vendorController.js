@@ -37,9 +37,10 @@ const getProducts = async (req, res) => {
         let products = await Product.find({})
 
         if(products !== null){
+
             products.forEach(product => {
                 for(let x = 0; x < productids.length; x++){
-                    if(product._id === productids[x].productid){
+                    if(product._id == productids[x].productid){
                         foundProducts.push(product)
                     }
                 }

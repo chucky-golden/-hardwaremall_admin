@@ -6,7 +6,7 @@ const auth = require("../middlewares/auth");
 router.post('/edit', auth, vendorController.editVendor)
 
 // request coming from the vendors service to get vendors products
-router.get('/getvendorproducts', vendorController.getProducts)
+router.post('/getvendorproducts', vendorController.getProducts)
 
 
 module.exports = router
