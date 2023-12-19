@@ -34,7 +34,11 @@ const getProducts = async (req, res) => {
         let productids = req.body.products
         let foundProducts = []
 
+        console.log('adata', productids)
+
         let products = await Product.find({})
+
+        console.log('getdata', products)
 
         if(products !== null){
 
@@ -45,6 +49,8 @@ const getProducts = async (req, res) => {
                     }
                 }
             })
+
+            console.log('found', foundProducts)
             
             res.json({ foundProducts: foundProducts })
         }else{
