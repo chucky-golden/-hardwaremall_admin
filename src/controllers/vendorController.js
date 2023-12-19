@@ -15,7 +15,7 @@ const editVendor = async (req, res) => {
         console.log('id', vendorid)
         console.log('action', action)
 
-        let edit = await axios.post('https://vendors-jpnc.onrender.com/giveData/editdata', {
+        await axios.post('https://vendors-jpnc.onrender.com/giveData/editdata', {
             vendorid: vendorid,
             action: action
         })
