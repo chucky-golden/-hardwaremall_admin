@@ -31,7 +31,7 @@ const editVendor = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try{
-        let productids = req.body.products
+        let productGotten = req.body.products
         let foundProducts = []
 
         let products = await Product.find({})
@@ -39,9 +39,13 @@ const getProducts = async (req, res) => {
         if(products !== null){
 
             products.forEach(product => {
-                for(let x = 0; x < productids.length; x++){
-                    if(product._id == productids[x].productid){
-                        foundProducts.push(product)
+                for(let x = 0; x < productGotten.length; x++){
+                    if(product._id == productGotten[x].productid){
+                        let data = {
+                            importObj: productGotten[x],
+                            productObj: product
+                        }
+                        foundProducts.push(data)
                     }
                 }
             })
