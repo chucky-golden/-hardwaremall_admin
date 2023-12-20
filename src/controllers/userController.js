@@ -9,9 +9,14 @@ const findProducts = async (req, res) => {
     try{
         const products = await Product.find()
         if(products !== null){
-            res.json({ foundproducts: products })
+
+            let response = await axios.post('https://vendors-jpnc.onrender.com/users/products', {
+                products: products
+            })
+
+            res.json({ message: response.data.foundproducts })
         }else{
-            res.json({ foundproducts: products })
+            res.json({ message: 'no product found' })
         }
 
     }catch (error) {
@@ -98,9 +103,13 @@ const topproducts = async (req, res) => {
     try{
         const products = await Product.find().sort({ countperimport: -1 }).limit(8)
         if(products !== null){
-            res.json({ foundproducts: products })
+            let response = await axios.post('https://vendors-jpnc.onrender.com/users/topproducts', {
+                products: products
+            })
+
+            res.json({ message: response.data.foundproducts })
         }else{
-            res.json({ foundproducts: products })
+            res.json({ message: 'no product found' })
         }
 
     }catch (error) {
