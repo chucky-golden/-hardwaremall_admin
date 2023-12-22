@@ -62,7 +62,27 @@ const getProducts = async (req, res) => {
     }
 }
 
+
+const getEditedProducts = async (req, res) => {
+    try{
+        let productid = req.body.productid
+
+        let product = await Product.findOne({ _id: productid })
+
+        if(product !== null){            
+            res.json({ product: product })
+        }else{
+            res.json({ product: product })
+        }
+
+    }catch (error) {
+        console.log(error)
+        res.json({ message: 'error processing request' })
+    }
+}
+
 module.exports = {
     editVendor,
-    getProducts
+    getProducts,
+    getEditedProducts
 }
