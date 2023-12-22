@@ -143,14 +143,15 @@ const vendorProducts = async (req, res) => {
     try{
         let productData = req.body.data
         let productDetails = []
-
-        console.log('sent', productData)
         
         const products = await Product.find()
 
+        console.log('l', products.length)
+        console.log('p', products)
+
         productData.forEach(data => {
             for(let x = 0; x < products.length; x++){
-                if(data.productid === products[x]._id){
+                if(data.productid == products[x]._id){
                     productDetails.push(products[x])
                 }
             }
