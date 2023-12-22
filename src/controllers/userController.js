@@ -146,9 +146,6 @@ const vendorProducts = async (req, res) => {
         
         const products = await Product.find()
 
-        console.log('l', products.length)
-        console.log('p', products)
-
         productData.forEach(data => {
             for(let x = 0; x < products.length; x++){
                 if(data.productid == products[x]._id){
@@ -156,8 +153,6 @@ const vendorProducts = async (req, res) => {
                 }
             }
         });
-
-        console.log('gottrn', productDetails)
 
         res.json({ foundproducts: productDetails })
         
