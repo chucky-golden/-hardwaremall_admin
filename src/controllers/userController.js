@@ -35,7 +35,7 @@ const findProductWithSlug = async (req, res) => {
 
         let getId = await Product.findOne({ slug: slug })
 
-        console.log(getid)
+        console.log(getId)
 
         if(getId !== null){
 
