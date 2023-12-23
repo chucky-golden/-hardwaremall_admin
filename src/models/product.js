@@ -26,6 +26,10 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
+    brand: {
+        type: String,
+        required: true
+    },
     countperimport: {
         type: String,
         required: true
