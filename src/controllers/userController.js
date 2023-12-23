@@ -47,8 +47,6 @@ const findProductWithSlug = async (req, res) => {
                 id: getId._id
             })
 
-            console.log(response.data)
-
             // get affiliate links
             let getAff = []
             let affiliate = getId.affiliate
