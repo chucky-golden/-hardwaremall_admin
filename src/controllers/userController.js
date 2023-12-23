@@ -35,16 +35,12 @@ const findProductWithSlug = async (req, res) => {
         
         let getId = await Product.findOne({ slug: slug })
 
-        console.log('gt',getId)
-
         if(getId !== null){
 
             // using slug without number attached to get 10 similar product
             slug = slug.split('-')
             slug = slug.pop()
             slug = escapeRegexp(slug);
-
-            console.log(slug)
 
             // send request to vendor app to get vendors that imported this product 
             let response = await axios.post('https://vendors-jpnc.onrender.com/users/productsid', {
