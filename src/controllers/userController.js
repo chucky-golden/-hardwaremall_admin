@@ -33,7 +33,9 @@ const findProductWithSlug = async (req, res) => {
         // using slug to get id of the product
         let slug = req.body.slug
 
-        let getId = await Product.findOne({ slug: req.body.slug })
+        let getId = await Product.findOne({ slug: slug })
+
+        console.log(getid)
 
         if(getId !== null){
 
@@ -42,10 +44,14 @@ const findProductWithSlug = async (req, res) => {
             slug = slug.pop()
             slug = escapeRegexp(slug);
 
+            console.log(slug)
+
             // send request to vendor app to get vendors that imported this product 
             let response = await axios.post('https://vendors-jpnc.onrender.com/users/productsid', {
                 id: getId._id
             })
+
+            console.log(response.data)
 
             // get affiliate links
             let getAff = []
