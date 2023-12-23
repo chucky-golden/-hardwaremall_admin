@@ -32,8 +32,8 @@ const findProductWithSlug = async (req, res) => {
 
         // using slug to get id of the product
         let slug = req.body.slug
-        console.log('sl',slug)
-        let getId = await Product.findOne({ slug: slug })
+        
+        let getId = await Product.find({ slug: slug })
 
         console.log('gt',getId)
 

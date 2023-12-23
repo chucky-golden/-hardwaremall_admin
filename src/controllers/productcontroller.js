@@ -253,6 +253,7 @@ const editProduct = async (req, res) => {
                             description: req.body.description,
                             category: req.body.category,
                             tags: req.body.tags,
+                            brand: req.body.brand,
                             slug: slug,
                             affiliate: req.body.affiliate,
                         }
