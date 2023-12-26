@@ -101,12 +101,14 @@ const findProductWithSlug = async (req, res) => {
 // send top 8 uploaded product
 const topproducts = async (req, res) => {
     try{
+        console.log('test')
         const products = await Product.find().sort({ countperimport: -1 }).limit(8)
+        console.log('f', products)
         if(products !== null){
             let response = await axios.post('https://vendors-jpnc.onrender.com/users/topproducts', {
                 products: products
             })
-
+            console.log(response.data)
             res.json({ message: response.data.foundproducts })
         }else{
             res.json({ message: 'no product found' })
