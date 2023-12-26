@@ -24,7 +24,7 @@ const ProductSchema = new Schema({
     },
     tags: {
         type: String,
-        required: true
+        required: false
     },
     brand: {
         type: String,
@@ -40,7 +40,7 @@ const ProductSchema = new Schema({
     },
     affiliate: {
         type: String,
-        required: true
+        required: false
     },
 }, { timestamps: true })
 
