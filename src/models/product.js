@@ -31,7 +31,7 @@ const ProductSchema = new Schema({
         required: true
     },
     countperimport: {
-        type: String,
+        type: Number,
         required: true
     },
     slug: {

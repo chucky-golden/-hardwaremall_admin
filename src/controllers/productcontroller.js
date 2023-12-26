@@ -36,7 +36,7 @@ const createProduct = async (req, res) => {
                     category: req.body.category,
                     tags: req.body.tags,
                     brand: req.body.brand,
-                    countperimport: '0',
+                    countperimport: 0,
                     slug: slug,
                     affiliate: req.body.affiliate,
                 };
