@@ -3,8 +3,6 @@ const Product = require('../models/product')
 
 const updateData = async (req, res) => {
     try{
-
-        console.log('b', req.body)
         const product = await Product.updateOne({ _id: req.body.productid }, 
             {
                 $set:{
