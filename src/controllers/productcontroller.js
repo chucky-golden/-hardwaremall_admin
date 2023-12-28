@@ -160,13 +160,17 @@ const viewVideo = async (req, res) => {
 const viewProduct = async (req, res) => {
     try{
 
-        let response = await Product.find().sort({ createdAt: -1 })
-        if(response !== null){
-            res.json({ products: response })
+        let products = await Product.find().sort({ createdAt: -1 })
+        if(products !== null){
+
+            let response = await axios.post('https://vendors-jpnc.onrender.com/users/products', {
+                products: products
+            })
+
+            res.json({ message: response.data.foundproducts })
+        }else{
+            res.json({ message: 'no product found' })
         }
-        else {
-            res.json({ message: 'error handling request' })
-        } 
 
     }catch (error) {
         console.log(error)
