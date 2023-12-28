@@ -3,6 +3,7 @@ const Video = require('../models/advideo')
 const Affiliate = require('../models/affiliate')
 const cloudinary = require('../middlewares/cloudinary')
 const streamifier = require('streamifier')
+const axios = require('axios')
 
 
 // upload products
